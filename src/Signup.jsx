@@ -59,15 +59,18 @@ const Signup = () => {
     }
 
     try {
-      const response = await signUp(formData); // Await the signUp call
-
-      if (response.success) {
-        setSuccessMessage(response.message || "Successfully registered!");
+      const response = await signUp(formData);
+  
+      // Check if the response contains a success property and handle accordingly
+      if (response?.success || response?.status === "success") {
+        setSuccessMessage("Signup successful! Redirecting to login...");
+       
+      } else {
+        // Use a fallback message if the response doesn't have a clear error message
+        setError(response?.message || "save data succesfull! .");
         setTimeout(() => {
           navigate("/login");
         }, 2000);
-      } else {
-        setError(response.message || "Signup failed. Please try again.");
       }
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred during signup.");
@@ -87,17 +90,16 @@ const Signup = () => {
   };
 
   return (
-    <div className="pt-8 min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-800 via-blue-900 to-indigo">
+    <div className="pb-10 pt-4 min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-800 via-blue-900 to-indigo">
       {successMessage && (
         <div className="absolute top-5 left-1/2 transform -translate-x-1/2 bg-green-500 text-white py-2 px-6 rounded shadow-lg font-medium">
           {successMessage}
         </div>
       )}
-      <div className="bg-gray-800 bg-opacity-80 backdrop-blur-md rounded-lg shadow-lg p-8 w-full max-w-md">
+      <div className="bg-gray-800 bg-opacity-80 backdrop-blur-md rounded-lg shadow-lg p-12 w-full max-w-lg">
         <h1 className="text-3xl font-bold text-white text-center mb-6">Sign Up</h1>
         {error && <p className="text-red-500 text-center mb-4 font-medium">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Input fields */}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label htmlFor="username" className="block text-sm font-medium text-gray-300">
@@ -128,7 +130,6 @@ const Signup = () => {
               />
             </div>
           </div>
-          {/* Other fields */}
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-300">
               Email

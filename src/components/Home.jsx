@@ -4,7 +4,7 @@ import Banner from './Banner'
 import Content from './Content'
 import ImageGrid from './ImageGrid'
 import Content2 from './Contents'
-
+import Navbar from './Navbar'
 
 
 
@@ -12,7 +12,7 @@ import Content2 from './Contents'
 const Home = () => {
   return (
     <div>
-     
+      <Navbar/>
       <Banner />
       <Marquee />
       <Content />

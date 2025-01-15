@@ -19,6 +19,7 @@ export default function Marquee() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  
   return (
     <div>
    

@@ -17,14 +17,29 @@ import Categories1 from './components/categories/Categories1';
 import Category2 from './components/categories/subcategories/Category2';
 import Page1 from './pages/Page1';
 import Listemployee from './pages/Listemployee';
+import Sidebar from './components/Sidebarr';
+import Header from './components/common/Header';
+import OverviewPage from  './components/OverviewPage';
+import AdminProduct from './components/AdminProduct';
+import Categories from './components/Categories';
+import Setting from './components/Setting';
+import Analytics from './components/Analytics';
+import Commonsidebar from './components/common/Commonsidebar';
+
+
 
 
 const App = () => {
   return (
+    
     <BrowserRouter>
       <div className="app-container">
         {/* Navbar is included so it appears on all routes */}
-        <Navbar />
+        <div className='fixed insert-0 z-0'>
+      <div className='absolute inser-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 opacity-80'/>
+        <div className='absoluteinset-0 backdrop-blur-sm'/>
+    </div>
+    
 
         {/* Main content area */}
         <div className="main-content">
@@ -44,12 +59,19 @@ const App = () => {
             <Route path="/subcategory2" element={<Category2/>}/>
             <Route path="/page1" element={<Page1/>}/>
             <Route path="/listemployee" element={<Listemployee/>}/>
-
+            
+            <Route path="/admin/" element={<OverviewPage/>}/>
+            <Route path="/admin/product" element={<AdminProduct/>}/>
+            <Route path="/admin/category" element={<Categories/>}/>
+            <Route path="/admin/setting" element={<Setting/>}/>
+            <Route path="/admin/analytics" element={<Analytics/>}/>
+            
           </Routes>
         </div>
 
         {/* Footer is included so it appears on all routes */}
         <Footer />
+       <Header/>
       </div>
     </BrowserRouter>
   );

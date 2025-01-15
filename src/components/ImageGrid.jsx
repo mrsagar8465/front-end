@@ -42,7 +42,7 @@ function ImageGrid() {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
     const element = document.getElementById("image-grid");

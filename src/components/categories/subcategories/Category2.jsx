@@ -1,61 +1,105 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 
 const DynamicCategoryTable = () => {
-  const [categories, setCategories] = useState([
-    { id: 1, name: "Electronics", description: "Devices and gadgets" },
-    { id: 2, name: "Furniture", description: "Home and office furniture" },
-    { id: 3, name: "Clothing", description: "Apparel and accessories" },
-  ]);
-  const [isEditing, setIsEditing] = useState(false);
-  const [currentCategory, setCurrentCategory] = useState(null);
+  const [categories, setCategories] = useState([ ]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMode, setModalMode] = useState("add"); // 'add' or 'edit'
+  const [currentCategory, setCurrentCategory] = useState({
+    id: null,
+    name: "",
+    description: "",
+  });
 
-  const handleEdit = (category) => {
-    setIsEditing(true);
-    setCurrentCategory({ ...category });
-  };
-
-  const handleDelete = (id) => {
-    setCategories(categories.filter((category) => category.id !== id));
-  };
-
-  const handleAdd = () => {
-    const newCategory = {
-      id: categories.length + 1,
-      name: "New Category",
-      description: "Description of new category",
+   // Fetch categories from backend
+   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("/api/categories"); // Replace with your API endpoint
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
     };
-    setCategories([...categories, newCategory]);
+    fetchCategories();
+  }, []);
+
+
+  const openAddModal = () => {
+    setModalMode("add");
+    setCurrentCategory({ id: null, name: "", description: "" });
+    setIsModalOpen(true);
+  };
+
+  const openEditModal = (category) => {
+    setModalMode("edit");
+    setCurrentCategory({ ...category });
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setCurrentCategory({ id: null, name: "", description: "" });
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this category?")) {
+      try {
+        await axios.delete(`/api/categories/${id}`); // Replace with your API endpoint
+        setCategories(categories.filter((category) => category.id !== id));
+      } catch (error) {
+        console.error("Error deleting category:", error);
+      }
+    }
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setCurrentCategory({ ...currentCategory, [name]: value });
+    setCurrentCategory((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = () => {
-    setCategories(
-      categories.map((category) =>
-        category.id === currentCategory.id ? currentCategory : category
-      )
-    );
-    setIsEditing(false);
-    setCurrentCategory(null);
+  const handleSave = async () => {
+    try {
+      if (modalMode === "add") {
+        const response = await axios.post("/api/categories", {
+          name: currentCategory.name,
+          description: currentCategory.description,
+        });
+        setCategories([...categories, response.data]);
+      } else if (modalMode === "edit") {
+        const response = await axios.put(`/api/categories/${currentCategory.id}`, {
+          name: currentCategory.name,
+          description: currentCategory.description,
+        });
+        setCategories(
+          categories.map((category) =>
+            category.id === currentCategory.id ? response.data : category
+          )
+        );
+      }
+      closeModal();
+    } catch (error) {
+      console.error("Error saving category:", error);
+    }
   };
+
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      {/* Sidebar */}
-     
+      {/* Sidebar (Optional) */}
+      {/* <div className="w-64 bg-white shadow-md">Sidebar content here</div> */}
 
       {/* Main Content */}
       <div className="flex-1 p-6">
         <h1 className="text-3xl font-bold mb-6">Dynamic Category Table</h1>
+        <div className="flex justify-end mb-4 pr-28">
         <button
-          className="mb-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
-          onClick={handleAdd}
+          className="mb-4 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded "
+          onClick={openAddModal}
         >
           Add Category
         </button>
+        </div>
+
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
             <thead className="bg-gray-50">
@@ -75,7 +119,7 @@ const DynamicCategoryTable = () => {
                   <td className="py-3 px-4 text-center space-x-2">
                     <button
                       className="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded"
-                      onClick={() => handleEdit(category)}
+                      onClick={() => openEditModal(category)}
                     >
                       Edit
                     </button>
@@ -92,36 +136,51 @@ const DynamicCategoryTable = () => {
           </table>
         </div>
 
-        {isEditing && (
-          <div className="mt-6 bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-bold mb-4">Edit Category</h2>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Name</label>
-                <input
-                  type="text"
-                  name="name"
-                  value={currentCategory.name}
-                  onChange={handleInputChange}
-                  className="w-full mt-1 p-2 border border-gray-300 rounded"
-                />
+        {/* Modal */}
+        {isModalOpen && (
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white w-full max-w-md p-6 rounded-lg shadow-lg">
+              <h2 className="text-xl font-bold mb-4">
+                {modalMode === "add" ? "Add New Category" : "Edit Category"}
+              </h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={currentCategory.name}
+                    onChange={handleInputChange}
+                    className="w-full mt-1 p-2 border border-gray-300 rounded"
+                    placeholder="Enter category name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Description</label>
+                  <input
+                    type="text"
+                    name="description"
+                    value={currentCategory.description}
+                    onChange={handleInputChange}
+                    className="w-full mt-1 p-2 border border-gray-300 rounded"
+                    placeholder="Enter category description"
+                  />
+                </div>
+                <div className="flex justify-end space-x-2">
+                  <button
+                    className="bg-gray-500 hover:bg-gray-600 text-white py-2 px-4 rounded"
+                    onClick={closeModal}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
+                    onClick={handleSave}
+                  >
+                    {modalMode === "add" ? "Add" : "Save"}
+                  </button>
+                </div>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">Description</label>
-                <input
-                  type="text"
-                  name="description"
-                  value={currentCategory.description}
-                  onChange={handleInputChange}
-                  className="w-full mt-1 p-2 border border-gray-300 rounded"
-                />
-              </div>
-              <button
-                className="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded"
-                onClick={handleSave}
-              >
-                Save
-              </button>
             </div>
           </div>
         )}
