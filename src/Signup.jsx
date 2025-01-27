@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { signUp } from "./Services/User_Service";
+import { signUp } from "./components/common/User_Service";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -67,10 +67,10 @@ const Signup = () => {
        
       } else {
         // Use a fallback message if the response doesn't have a clear error message
-        setError(response?.message || "save data succesfull! .");
+        setError(response?.message || "save succesfull! .");
         setTimeout(() => {
           navigate("/login");
-        }, 2000);
+        }, 1000);
       }
     } catch (err) {
       setError(err.response?.data?.message || "An error occurred during signup.");

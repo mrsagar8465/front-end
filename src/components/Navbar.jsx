@@ -25,7 +25,7 @@ function classNames(...classes) {
 
 export default function Navbar() {
   return (
-    <Disclosure as="nav" className="bg-gray-500 fixed top-0 left-0 w-full z-50 shadow-md ">
+    <Disclosure as="nav" className="bg-gray-900 fixed top-0 left-0 w-full z-50 shadow-md ">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           {/* Mobile menu button */}
@@ -76,7 +76,8 @@ export default function Navbar() {
             {/* Notification Button */}
             
 
-            {/* Profile dropdown */}
+     
+              {/* Profile dropdown */}
                       </div>
         </div>
       </div>

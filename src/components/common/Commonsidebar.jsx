@@ -3,11 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { BarChart2, Settings, ShoppingBag, TrendingUp, Users, Menu, ChevronDown, ChevronUp, MenuIcon } from 'lucide-react'; // Importing the arrow icons
 import { Link } from 'react-router-dom';
 
+
 const SIDEBAR_ITEMS = [
   { name: 'Admin', icon: BarChart2, color: '#6366f1', href: '/admin/' },
   { name: 'product', icon: Users, color: '#Ec4899', href: '/admin/product' },
   { name: 'Menu', icon: MenuIcon, color: '#10B981', href: '#', hasDropdown: true },
- 
+  { name: 'page', icon: TrendingUp, color: '#3B82F6', href: '/admin/page' },
   { name: 'analytics', icon: TrendingUp, color: '#3B82F6', href: '/admin/analytics' },
   { name: 'setting', icon: Settings, color: '#6EE7B7', href: '/admin/setting' },
 ];
@@ -81,10 +82,10 @@ const Commonsidebar = () => {
                       <Link to="/admin/category">
                         <motion.div className="text-white p-2 rounded-lg hover:bg-gray-600">Category</motion.div>
                       </Link>
-                      <Link to="/subcategory">
+                      <Link to="/admin/subcategory">
                         <motion.div className="text-white p-2 rounded-lg hover:bg-gray-600">Subcategory</motion.div>
                       </Link>
-                      <Link to="/child-category">
+                      <Link to="/admin/child-category">
                         <motion.div className="text-white p-2 rounded-lg hover:bg-gray-600">Child Category</motion.div>
                       </Link>
                     </motion.div>

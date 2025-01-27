@@ -2,31 +2,39 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <footer className="bg-blue-900 text-gray-300 ">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
         {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+          {/* link section */}
+        
+          
+
+
+
           {/* About Section */}
+
           <div>
-            <h3 className="text-lg font-semibold text-white">About Us</h3>
-            <ul className="mt-4 space-y-2">
+            <h3 className="px-36 text-lg font-semibold text-white">About Us</h3>
+            <ul className="mt-2 space-y-2 px-36">
             <li>
-                <a href="/" className="hover:text-white transition">
+                <a href="/" className="text-white transition">
                   Home
                 </a>
               </li>
               <li>
-                <a href="/service" className="hover:text-white transition">
+                <a href="/service" className="text-white transition">
                   Services
                 </a>
               </li>
               <li>
-                <a href="/about" className="hover:text-white transition">
+                <a href="/about" className="text-white transition">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition">
+                <a href="#" className="text-white transition">
                   Contact
                 </a>
               </li>
@@ -35,25 +43,25 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold text-white">Quick Links</h3>
-            <ul className="mt-4 space-y-2">
+            <h3 className=" px-20 text-lg font-semibold text-white">Quick Links</h3>
+            <ul className="mt-4 space-y-2 px-20">
               <li>
-                <a href="/" className="hover:text-white transition">
+                <a href="/" className="text-white transition">
                   Home
                 </a>
               </li>
               <li>
-                <a href="/service" className="hover:text-white transition">
+                <a href="/service" className="text-white transition">
                   Services
                 </a>
               </li>
               <li>
-                <a href="/about" className="hover:text-white transition">
+                <a href="/about" className="text-white transition">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition">
+                <a href="#" className="text-white transition">
                   Contact
                 </a>
               </li>
@@ -62,7 +70,7 @@ const Footer = () => {
 
           {/* Contact Section */}
           <div>
-            <h3 className="text-lg font-semibold text-white">Contact Us</h3>
+            <h3 className=" px-20 text-lg font-semibold text-white">Contact Us</h3>
             <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <span className="font-medium">Email:</span>{" "}
@@ -72,7 +80,7 @@ const Footer = () => {
               </li>
               <li>
                 <span className="font-medium">Phone:</span>{" "}
-                <a href="tel:+9134567890" className="hover:text-white">
+                <a href="tel:+9134567890" className="text-white">
                   +918979097256
                 </a>
               </li>
@@ -115,10 +123,10 @@ const Footer = () => {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-gray-700 mt-8"></div>
+        <div className="border-t border-white-700 mt-2"></div>
 
         {/* Bottom Section */}
-        <div className="mt-5 flex flex-col sm:flex-wrap justify-between items-center text-sm">
+        <div className="mt-2 mb-0 flex flex-col sm:flex-wrap justify-between items-center text-sm">
           <p>&copy; {new Date().getFullYear()} Your Company. All rights reserved.</p>
                   </div>
       </div>

@@ -5,8 +5,9 @@ import Content from './Content'
 import ImageGrid from './ImageGrid'
 import Content2 from './Contents'
 import Navbar from './Navbar'
-
-
+import TestimonialCarousel from './TestimonialCarousel'
+import TeamMembers from './TeamMembers'
+import Footer from './Footer'
 
 
 const Home = () => {
@@ -18,6 +19,9 @@ const Home = () => {
       <Content />
       <Content2/>
       <ImageGrid />
+      <TeamMembers/>
+      <TestimonialCarousel/>
+      <Footer/>
       
       
 
